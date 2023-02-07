@@ -38,7 +38,18 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let arr = [];
+    for (let i = 0; i < expr.length; i += 10){
+        arr.push(expr.slice(i, i +10));
+    }
+    let result = arr
+    .map(el => MORSE_TABLE[el //Заменяем код на буквы
+    .slice(el.indexOf('1')) //Обрезаем все '0' до первой '1'
+    .match(/.{1,2}/g) //Разбиваем массив по 2-а элемента
+    .map(el => el === '11' ? '-' : el === '10' ? '.' : null) //Заменяем значение на '-' или '.' (!пробел получит undefined)
+    .join('')]); // Собираем ключ для объекта
+    let word = result.map(el => el !== undefined ? el : ' '); // Заменяем undefined на ' '(пробел)
+    return word.join(''); //Возвращаем собранную строку
 }
 
 module.exports = {
